@@ -1,24 +1,24 @@
-﻿
-{% extends "base.html" %}
 
-{% block head %}
+<%inherit file="base.html"/>
+
+<%block name="head">
     <style type="text/css" media="all">
         .m-page-top {
             margin: 16px 0 8px;
         }
     </style>
-{% endblock %}
+</%block>
 
-{% block body %}
+
 <div class="container">
     <div class="m-page-top">FPage demo</div>
 </div>
-{% endblock %}
 
-{% block script %}
+
+<%block name="script">
 <script>
     (function() {
         ;
 	})();
 </script>
-{% endblock %}
+</%block>

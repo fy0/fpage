@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <title>{{ config.TITLE }}</title>
+    <meta charset="utf-8">
+    <script src="{{ static('js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    {% block body %}{% endblock %}
+    {% block script %}{% endblock %}
+</body>

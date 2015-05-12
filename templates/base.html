@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
+<% import config %>
 <head>
-    <title>{{ config.TITLE }}</title>
+    <title>${config.TITLE}</title>
     <meta charset="utf-8">
-    <script src="/static/js/main.js"></script>
-    <link rel="stylesheet" href="/static/css/style.css">
-    {% block head %}{% endblock %}
+    <script src="${ static('js/main.js') }"></script>
+    <link rel="stylesheet" href="${ static('css/style.css') }">
+    <%block name="header"/>
 </head>
 
 <body>
-    {% block body %}{% endblock %}
-    {% block script %}{% endblock %}
+    ${self.body()}
+    <%block name="script"/>
 </body>
