@@ -1,5 +1,6 @@
 # coding:utf-8
 
+import json
 import random
 import string
 import tornado.web
@@ -53,6 +54,26 @@ else:
     lookup = None
 
 
+#session
+class SimpleSession(object):
+    def __init__(self, request):
+        self._request = request
+        self._data = self.load()
+
+    def __getitem__(self, item):
+        return self._data.get(item)
+
+    def __setitem__(self, key, value):
+        self._data[key] = value
+
+    def load(self):
+        return json.loads(self._request.get_secure_cookie('session') or '{}')
+
+    def flush(self):
+        self._request.set_secure_cookie('session', json.dumps(self._data))
+        print 11111, self._data
+
+
 class View(tornado.web.RequestHandler):
     def render(self, fn=None, **kwargs):
         if not fn:
@@ -66,3 +87,11 @@ class View(tornado.web.RequestHandler):
             self.finish(tmpl.render(req=self, static=self.static_url, url_for=self.reverse_url, **kwargs))
         else:
             super(View, self).render(self, fn, req=self, static=self.static_url, url_for=self.reverse_url, **kwargs)
+
+    def initialize(self):
+        self.session = SimpleSession(self)
+        super(View, self).initialize()
+
+    def flush(self, include_footers=False, callback=None):
+        self.session.flush()
+        super(View, self).flush(include_footers, callback)

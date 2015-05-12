@@ -2,6 +2,8 @@
 
 一个轻量级的 tornado web 项目模板。
 
+像创建一个 Flask 项目一样轻松的创建一个 Tornado 项目。
+
 ## 用法
 
 下载之，置于一个新目录，稍微编辑一下config.py
@@ -11,6 +13,10 @@
 ## 特性
 
 * 基于 tornado 
+
+* MVT 架构(Model, View, Template)
+
+* 简单 session 支持（基于 cookie）
 
 * 可选择模板引擎 mako 或 jinjia2，已做好配置
 
