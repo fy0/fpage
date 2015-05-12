@@ -19,6 +19,7 @@ application = tornado.web.Application(
     cookie_secret=config.COOKIE_SECRET,
 )
 
+config.app = application
 
 if __name__ == "__main__":
     if len(argv) > 1 and  argv[1][:6] == '-port=':

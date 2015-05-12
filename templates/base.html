@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <% import config %>
+<html>
 <head>
     <title>${config.TITLE}</title>
     <meta charset="utf-8">
@@ -9,6 +10,19 @@
 </head>
 
 <body>
+    % for msg in get_messages():
+        % if msg.tag == 'success':
+            <div class="ui-green">
+                ${msg.txt}
+            </div>
+        % elif msg.tag == 'error':
+            <div class="ui-red">
+                ${msg.txt}
+            </div>
+        % endif
+    % endfor
+
     ${self.body()}
     <%block name="script"/>
 </body>
+</html>

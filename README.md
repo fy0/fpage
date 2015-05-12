@@ -26,11 +26,11 @@
 
 * 集成 sqalchemy 支持
 
-* [WIP]集成类似 flask 中 flash 或 django 中 messages 的功能
+* 集成类似 django 中 messages 或 flask 中 flash 的功能
 
 ## TODO-LIST
 
 * peewee 支持
 
-* 添加 messages(flask) 支持
+* 安全性优化
 

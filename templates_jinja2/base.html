@@ -1,14 +1,28 @@
 ﻿<!DOCTYPE html>
 
+<html>
 <head>
     <title>{{ config.TITLE }}</title>
     <meta charset="utf-8">
     <script src="{{ static('js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ static('css/style.css') }}">
-    {% block head %}{% endblock %}
+    {% block header %}{% endblock %}
 </head>
 
 <body>
+    {% for msg in get_messages() %}
+        {% if msg.tag == 'success' %}
+            <div class="ui-green">
+                {{ msg.txt }}
+            </div>
+        {% elif msg.tag == 'error' %}
+            <div class="ui-red">
+                {{ msg.txt }}
+            </div>
+        {% endif %}
+    {% endfor %}
+
     {% block body %}{% endblock %}
     {% block script %}{% endblock %}
 </body>
+</html>

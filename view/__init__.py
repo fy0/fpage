@@ -5,9 +5,10 @@ import random
 import string
 import tornado.web
 import config
+from lib.jsdict import JsDict
 
 
-#route
+# route
 class Route(object):
     urls = []
 
@@ -21,7 +22,7 @@ class Route(object):
 route = Route()
 
 
-#模板
+# 模板
 def get_lookup_mako():
     import mako.lookup
 
@@ -54,14 +55,17 @@ else:
     lookup = None
 
 
-#session
+# Session
 class SimpleSession(object):
     def __init__(self, request):
         self._request = request
         self._data = self.load()
 
-    def __getitem__(self, item):
-        return self._data.get(item)
+    def __delitem__(self, key):
+        del self._data[key]
+
+    def __getitem__(self, key):
+        return self._data.get(key)
 
     def __setitem__(self, key, value):
         self._data[key] = value
@@ -71,7 +75,47 @@ class SimpleSession(object):
 
     def flush(self):
         self._request.set_secure_cookie('session', json.dumps(self._data))
-        print 11111, self._data
+
+
+# 消息闪现支持
+class Messages(object):
+
+    MESSAGE_LEVEL = JsDict(
+        DEBUG=10,
+        INFO=20,
+        SUCCESS=25,
+        WARNING=30,
+        ERROR=40,
+    )
+
+    DEFAULT_TAGS = {
+        MESSAGE_LEVEL.DEBUG: 'debug',
+        MESSAGE_LEVEL.INFO: 'info',
+        MESSAGE_LEVEL.SUCCESS: 'success',
+        MESSAGE_LEVEL.WARNING: 'warning',
+        MESSAGE_LEVEL.ERROR: 'error',
+    }
+
+    def __init__(self):
+        self.messages = []
+
+    def _add_message(self, level, message):
+        self.messages.append([level, message])
+
+    def debug(self, message):
+        self._add_message(self.MESSAGE_LEVEL.DEBUG, message)
+
+    def info(self, message):
+        self._add_message(self.MESSAGE_LEVEL.INFO, message)
+
+    def success(self, message):
+        self._add_message(self.MESSAGE_LEVEL.SUCCESS, message)
+
+    def warning(self, message):
+        self._add_message(self.MESSAGE_LEVEL.WARNING, message)
+
+    def error(self, message):
+        self._add_message(self.MESSAGE_LEVEL.ERROR, message)
 
 
 class View(tornado.web.RequestHandler):
@@ -82,16 +126,37 @@ class View(tornado.web.RequestHandler):
                 self.__class__.__name__.lower()
             )).replace(r'//', r'/')
 
+        kwargs.update({
+            'req': self,
+            'static': self.static_url,
+            'url_for': self.reverse_url,
+            'get_messages': self.get_messages,
+        })
+
         if lookup:
             tmpl = lookup.get_template(fn)
-            self.finish(tmpl.render(req=self, static=self.static_url, url_for=self.reverse_url, **kwargs))
+            self.finish(tmpl.render(**kwargs))
         else:
-            super(View, self).render(self, fn, req=self, static=self.static_url, url_for=self.reverse_url, **kwargs)
+            super(View, self).render(self, fn, **kwargs)
+
+    def get_messages(self):
+        _messages = []
+        for i in self.session['_messages'] or []:
+            tag, txt = i
+            _messages.append(JsDict(tag=Messages.DEFAULT_TAGS[tag], txt=txt))
+        return _messages
 
     def initialize(self):
+        self.messages = Messages()
         self.session = SimpleSession(self)
         super(View, self).initialize()
 
     def flush(self, include_footers=False, callback=None):
+        self.session['_messages'] = self.messages.messages
         self.session.flush()
         super(View, self).flush(include_footers, callback)
+
+
+# sugar
+def url_for(name, *args):
+    return config.app.reverse_url(name, *args)

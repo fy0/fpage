@@ -7,4 +7,4 @@ from sqlalchemy.ext.declarative import declarative_base
 
 db = create_engine(config.DATABASE_URI)
 Model = declarative_base()
-Session = sessionmaker(bind=db)
+DBSession = sessionmaker(bind=db)
