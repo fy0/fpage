@@ -71,7 +71,7 @@ class SimpleSession(object):
         self._data[key] = value
 
     def load(self):
-        return json.loads(self._request.get_secure_cookie('session') or '{}')
+        return json.loads(self._request.get_secure_cookie('session').decode('utf-8') or '{}')
 
     def flush(self):
         self._request.set_secure_cookie('session', json.dumps(self._data))

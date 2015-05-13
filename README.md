@@ -1,8 +1,8 @@
 # fpage
 
-一个轻量级的 tornado web 项目模板。
+FPage 是一个tornado项目原型。帮助你跳过配置代码直接进入代码编写阶段。
 
-像创建一个 Flask 项目一样轻松的创建一个 Tornado 项目。
+基于tornado，可选 mako/jinjia2, sqlalchemy/peewee。
 
 ## 用法
 
