@@ -19,6 +19,21 @@
 * 基本的安全性开关 (secure cookie, xsrf)
 
 * 支持 flask 风格的 url 装饰器 @route
+
+* 简单 session 支持（基于 secure cookie）  
+
+* 可选择模板引擎 mako 或 jinjia2 或 tornado 默认，已做好配置  
+
+* 模板预定义三个模板变量：req static url_for  
+
+* 集成 sqlalchemy/peewee 支持（二选一）  
+
+* 集成类似 django 中 messages 或 flask 中 flash 的功能  
+
+
+## 特性说明
+
+* 支持 flask 风格的 url 装饰器 @route
   ```python
   from view import route, url_for, View
   
@@ -133,7 +148,7 @@
       % endif
   % endfor
   ```
-
+  
 ## TODO-LIST
 
 * 保持更新
