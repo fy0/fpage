@@ -17,6 +17,7 @@ application = tornado.web.Application(
     debug=config.DEBUG,
     static_path=path.join(path.dirname(path.abspath(__file__)), 'static'),
     cookie_secret=config.COOKIE_SECRET,
+    xsrf_cookies=True,
 )
 
 config.app = application

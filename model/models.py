@@ -1,6 +1,6 @@
 ﻿# coding:utf-8
 
-from model import Model, db
+from model import BaseModel, db
 import model.test
 
-Model.metadata.create_all(db)
+BaseModel.metadata.create_all(db)
