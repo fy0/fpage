@@ -142,10 +142,16 @@ class View(tornado.web.RequestHandler):
             super(View, self).render(self, fn, **kwargs)
 
     def get_messages(self):
+        msg_lst = self.messages.messages + self.session['_messages'] or []
         _messages = []
-        for i in self.session['_messages'] or []:
+
+        for i in msg_lst:
             tag, txt = i
+            try: txt = txt.decode('utf-8') # 为py2做个转换
+            except: pass
             _messages.append(JsDict(tag=Messages.DEFAULT_TAGS[tag], txt=txt))
+
+        self.messages.messages = []
         return _messages
 
     def initialize(self):
