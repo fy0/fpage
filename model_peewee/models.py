@@ -1,3 +1,6 @@
 ﻿# coding:utf-8
 
-import model.test
+from model.test import Test
+
+db.connect()
+db.create_tables([User])
