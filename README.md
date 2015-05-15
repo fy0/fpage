@@ -1,6 +1,6 @@
 # fpage
 
-FPage 是一个tornado项目原型。帮助你跳过配置代码直接进入代码编写阶段。
+FPage 是一个tornado项目原型。帮助你跳过配置代码直接进入代码编写。
 
 基于tornado，可选 mako/jinjia2, sqlalchemy/peewee。
 
@@ -29,6 +29,17 @@ FPage 是一个tornado项目原型。帮助你跳过配置代码直接进入代�
 * 集成 sqlalchemy/peewee 支持（二选一）  
 
 * 集成类似 django 中 messages 或 flask 中 flash 的功能  
+
+
+## 目录结构
+
+* model 数据库交互
+
+* view 逻辑
+
+* templates 模板目录
+
+* lib 存放一些全局使用的工具类
 
 
 ## 特性说明
