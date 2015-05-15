@@ -131,6 +131,8 @@ class View(tornado.web.RequestHandler):
             'static': self.static_url,
             'url_for': self.reverse_url,
             'get_messages': self.get_messages,
+            'xsrf_token': self.xsrf_form_html(),
+            'csrf_token': self.xsrf_form_html(),
         })
 
         if lookup:

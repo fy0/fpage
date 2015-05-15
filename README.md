@@ -32,7 +32,7 @@ python app.py
 
 * 可选择模板引擎 mako 或 jinjia2 或 tornado 默认，已做好配置  
 
-* 模板预定义三个模板变量：req static url_for  
+* 模板预定义模板变量：req static url_for csrf_token/xsrf_token  
 
 * 集成 sqlalchemy/peewee 支持（二选一）  
 
@@ -102,7 +102,7 @@ python app.py
   </body>
   ```
 
-* 模板预定义三个模板变量：req static url_for  
+* 模板预定义模板变量：req static url_for csrf_token/xsrf_token  
   req -> request object
   ```mako
     ${ req.current_user }
@@ -116,6 +116,12 @@ python app.py
   ```mako
     <p><a href="${ url_for('jump') }">Jump Page</a></p>
     <p><a href="${ url_for('about') }">About Page</a></p>
+  ```
+  csrf_token -> self.xsrf_form_html()
+  ```mako
+    <form method="post" class="am-form">
+        ${csrf_token}
+    </form>
   ```
 
 * 集成 sqlalchemy/peewee 支持（二选一）  
