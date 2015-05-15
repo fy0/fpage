@@ -27,5 +27,5 @@ if __name__ == "__main__":
         config.PORT = int(argv[1][6:])
 
     application.listen(config.PORT)
-    print('Server started.')
+    print('Server started at port %s' % config.PORT)
     tornado.ioloop.IOLoop.instance().start()
