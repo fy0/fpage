@@ -8,7 +8,15 @@ FPage 是一个tornado项目原型。帮助你跳过配置代码直接进入代�
 
 下载之，置于一个新目录，稍微编辑一下config.py
 
-开始使用。
+如果你使用 jinjia2 模板语言，删掉现有的 templates 并重命名 templates_jinja2 取代他。
+
+另外如果使用 peewee 代替 sqlalchemy，删掉 model 并将  model_peewee 改名为 model 。
+
+如果你更喜欢默认方案 mako + sqlalchemy，直接删掉两个带尾巴的目录就可以了。
+
+```bash
+python app.py
+```
 
 ## 特性
 
