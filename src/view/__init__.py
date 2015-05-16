@@ -71,7 +71,10 @@ class SimpleSession(object):
         self._data[key] = value
 
     def load(self):
-        return json.loads(self._request.get_secure_cookie('session').decode('utf-8') or '{}')
+        _s = self._request.get_secure_cookie('session') or '{}'
+        try: _s = _s.decode('utf-8') # fix:py2
+        except: pass
+        return json.loads(_s)
 
     def flush(self):
         self._request.set_secure_cookie('session', json.dumps(self._data))
@@ -142,7 +145,7 @@ class View(tornado.web.RequestHandler):
             super(View, self).render(self, fn, **kwargs)
 
     def get_messages(self):
-        msg_lst = self.messages.messages + self.session['_messages'] or []
+        msg_lst = self.messages.messages + (self.session['_messages'] or [])
         _messages = []
 
         for i in msg_lst:
@@ -168,3 +171,4 @@ class View(tornado.web.RequestHandler):
 # sugar
 def url_for(name, *args):
     return config.app.reverse_url(name, *args)
+
