@@ -44,3 +44,6 @@ docs/_build/
 
 .idea
 database.db
+*.py~
+.gitignore~
+*.un~
