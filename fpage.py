@@ -19,6 +19,7 @@ def help():
     print('')
 
 def startapp():
+    global input  # fix4py3
     if py_major_ver == 2:
         input = raw_input
     project_name = input('Project Name:')
@@ -29,19 +30,19 @@ def startapp():
         print('Invalid Project Name.')
         return
 
-    if tmpl_engine in ['', 'M']:
+    if tmpl_engine.lower() in ['', 'm']:
         tmpl_engine = 'mako'
-    elif tmpl_engine == 'J':
+    elif tmpl_engine.lower() in ['j', 'jinja', 'jinja2']:
         tmpl_engine = 'jinja2'
-    elif tmpl_engine == 'T':
+    elif tmpl_engine.lower() == ['t', 'tornado']:
         tmpl_engine = 'tornado'
     else:
         print('Invalid Value.')
         return
 
-    if db_orm in ['', 'S']:
+    if db_orm.lower() in ['', 's', 'sqlalchemy']:
         db_orm = 'sqlalchemy'
-    elif db_orm == 'P':
+    elif db_orm.lower() in ['p', 'peewee']:
         db_orm = 'peewee'
     else:
         print('Invalid Value.')
@@ -60,11 +61,15 @@ def startapp():
     project_dir = project_name
     shutil.copytree('src', project_dir)
 
-    if tmpl_engine == 'jinja2':
+    if tmpl_engine == 'mako':
+        shutil.rmtree(join(project_dir, 'templates_jinja2'))
+    elif tmpl_engine == 'jinja2':
         shutil.rmtree(join(project_dir, 'templates'))
         shutil.move(join(project_dir, 'templates_jinja2'), join(project_dir, 'templates'))
 
-    if db_orm == 'peewee':
+    if db_orm == 'sqlalchemy':
+        shutil.rmtree(join(project_dir, 'model_peewee'))
+    elif db_orm == 'peewee':
         shutil.rmtree(join(project_dir, 'model'))
         shutil.move(join(project_dir, 'model_peewee'), join(project_dir, 'model'))
     
