@@ -63,11 +63,15 @@ def startapp():
 
     if tmpl_engine == 'mako':
         shutil.rmtree(join(project_dir, 'templates_jinja2'))
+        shutil.rmtree(join(project_dir, 'templates_tornado'))
     elif tmpl_engine == 'jinja2':
         shutil.rmtree(join(project_dir, 'templates'))
+        shutil.rmtree(join(project_dir, 'templates_tornado'))
         shutil.move(join(project_dir, 'templates_jinja2'), join(project_dir, 'templates'))
     elif tmpl_engine == 'tornado':
+        shutil.rmtree(join(project_dir, 'templates'))
         shutil.rmtree(join(project_dir, 'templates_jinja2'))
+        shutil.move(join(project_dir, 'templates_tornado'), join(project_dir, 'templates'))
 
     if db_orm == 'sqlalchemy':
         shutil.rmtree(join(project_dir, 'model_peewee'))

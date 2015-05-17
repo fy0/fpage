@@ -142,7 +142,9 @@ class View(tornado.web.RequestHandler):
             tmpl = lookup.get_template(fn)
             self.finish(tmpl.render(**kwargs))
         else:
-            super(View, self).render(self, fn, config=config, **kwargs)
+            if fn.startswith('/'):
+                fn = '.' + fn
+            super(View, self).render(fn, config=config, **kwargs)
 
     def get_messages(self):
         msg_lst = self.messages.messages + (self.session['_messages'] or [])
