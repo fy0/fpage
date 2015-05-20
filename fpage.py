@@ -2,11 +2,14 @@
 # coding:utf-8
 
 import re
+import os
 import sys
 import shutil
 from sys import argv
 from os.path import join
 py_major_ver = sys.version_info[0]
+
+src_dir = os.path.abspath(sys.path[0])
 
 def help():
     print('FPage - tornado project generator')
@@ -59,7 +62,7 @@ def startapp():
         return
 
     project_dir = project_name
-    shutil.copytree('src', project_dir)
+    shutil.copytree(join(src_dir, 'src'), project_dir)
 
     if tmpl_engine == 'mako':
         shutil.rmtree(join(project_dir, 'templates_jinja2'))
@@ -93,5 +96,8 @@ if __name__ == "__main__":
             help()
         elif argv[1] == 'startapp':
             startapp()
+        else:
+            help()
     else:
         help()
+
