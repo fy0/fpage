@@ -2,7 +2,7 @@
 
 from model import db
 from model.test import Test
+from model.user import User
 
 db.connect()
-try: db.create_tables([Test])
-except: pass
+db.create_tables([Test, User], safe=True)

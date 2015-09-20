@@ -1,0 +1,25 @@
+
+{% extends "../base.html" %}
+
+{% block body %}
+<div class="container">
+    <form method="post">
+        {% raw xsrf_token %}
+        <label for="username">帐号:</label>
+        <input type="text" name="username" id="username" value="">
+        <br>
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" value="">
+        <br>
+        <label for="remember-me">
+            <input id="remember-me" type="checkbox">
+            记住密码
+        </label>
+        <br/>
+
+        <div>
+            <input type="submit" name="" value="登 录">
+        </div>
+    </form>
+</div>
+{% end %}

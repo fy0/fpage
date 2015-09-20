@@ -1,17 +1,17 @@
 
 <%inherit file="base.html"/>
 
-<%block name="header">
-    <style type="text/css" media="all">
-        .m-page-top {
-            margin: 16px 0 8px;
+<%block name="head">
+    <style>
+        .page-title {
+            font-weight: bold;
         }
     </style>
 </%block>
 
 
 <div class="container">
-    <div class="m-page-top">FPage demo</div>
+    <div class="page-title">FPage demo</div>
     <p><a href="${ url_for('jump') }">Jump Page</a></p>
     <p><a href="${ url_for('about') }">About Page</a></p>
 </div>

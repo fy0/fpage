@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+import os
 import re
 import sys
 import shutil
@@ -24,7 +25,7 @@ def startapp():
         input = raw_input
     project_name = input('Project Name:')
     tmpl_engine = input('Template Engine [M/J/T]:').lower()
-    db_orm = input('Database ORM [S/P]:').lower()
+    db_orm = input('Database ORM [P/S]:').lower()
 
     if len(project_name) == 0 or ' ' in project_name:
         print('Invalid Project Name.')
@@ -40,14 +41,14 @@ def startapp():
         print('Invalid Value.')
         return
 
-    if db_orm in ['', 's', 'sqlalchemy']:
-        db_orm = 'sqlalchemy'
-    elif db_orm in ['p', 'peewee']:
+    if db_orm in ['', 'p', 'peewee']:
         db_orm = 'peewee'
+    elif db_orm in ['s', 'sqlalchemy']:
+        db_orm = 'sqlalchemy'
     else:
         print('Invalid Value.')
         return
-        
+
     print('')
     print('   Project Name: %s' % project_name)
     print('Template Engine: %s' % tmpl_engine)
@@ -59,6 +60,10 @@ def startapp():
         return
 
     project_dir = project_name
+    if os.path.exists(project_dir):
+        print('Already Exists!')
+        return
+
     shutil.copytree('src', project_dir)
 
     if tmpl_engine == 'mako':

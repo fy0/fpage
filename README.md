@@ -5,11 +5,22 @@ FPage 是一个tornado项目生成器。
 能够自动创建基于 tornado + mako/jinja2 + sqlalchemy/peewee 的项目。
 
 
-## 用法
+## 使用
 
 ```bash
 python fpage.py startapp
 ```
+
+按照向导走，首先输入项目名。
+
+然后选择一个模板引擎（**M**ako/**J**inja2/**T**ornado）
+
+其次是ORM选择（**P**eewee/**S**QLChemy）
+
+最后输入 y 确认
+
+生成的目录就是你需要的，你可以试一下 python app.py 来运行他，然后访问 http://127.0.0.1:9000 来查看效果
+
 
 ## 特性
 
@@ -17,7 +28,9 @@ python fpage.py startapp
 
 * MVT 架构(Model, View, Template)
 
-* 基本的安全性开关 (secure cookie, xsrf)
+* 兼容 python 2 & python 3
+
+* 合理的安全性支持 (secure cookie, xsrf)
 
 * 支持 flask 风格的 url 装饰器 @route
 
@@ -29,8 +42,9 @@ python fpage.py startapp
 
 * 集成 sqlalchemy/peewee 支持（二选一）  
 
-* 集成类似 django 中 messages 或 flask 中 flash 的功能  
+* 集成消息闪现功能（类似 django 中 messages 或 flask 中 flash）  
 
+* 集成简单的用户系统
 
 ## 目录结构
 
@@ -137,7 +151,7 @@ python fpage.py startapp
       test = TextField()
   ```
 
-* 集成类似 django 中 messages 或 flask 中 flash 的功能  
+* 集成消息闪现功能（类似 django 中 messages 或 flask 中 flash）  
   view
   ```python
   @route('/jump_test', name='jump')
@@ -160,7 +174,21 @@ python fpage.py startapp
       % endif
   % endfor
   ```
-  
+
+## 更新
+
+### ver 1.1 update 2015.9.20
+
+* 加入了用户模块
+
+* 加入了与用户相关的两个基类：LoginView（登陆后可访问） 和 NoLoginView（非登陆可访问）
+
+* 加入了一个不检查 xsrf 的基类 AjaxView
+
+* 默认 ORM 切换为 peewee
+
+* 一些小的修正
+
 ## TODO-LIST
 
 * 保持更新

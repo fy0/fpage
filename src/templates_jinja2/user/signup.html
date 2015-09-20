@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <form method="post">
+        {{ xsrf_token }}
+        <label for="username">帐号:</label>
+        <input type="text" name="username" id="username" value="">
+        <br>
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" value="">
+        <br/>
+
+        <div>
+            <input type="submit" name="" value="注 册">
+        </div>
+    </form>
+</div>
+{% endblock %}
