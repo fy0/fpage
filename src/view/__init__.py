@@ -180,6 +180,12 @@ class View(tornado.web.RequestHandler):
             return user
 
 
+class AjaxView(View):
+    def check_xsrf_cookie(self):
+        # useless for json request
+        pass
+
+
 class LoginView(View):
     def prepare(self):
         if not self.current_user():
