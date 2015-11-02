@@ -45,6 +45,7 @@ class SignUp(NoLoginView):
     def post(self):
         username = self.get_argument("username")
         password = self.get_argument("password")
+        password_again = self.get_argument("password_again")
 
         error = False
         if len(username) < 3:
@@ -56,6 +57,9 @@ class SignUp(NoLoginView):
         if User.exist(username):
             error = True
             self.messages.error("用户已存在！")
+        if password != password_again:
+            error = True
+            self.messages.error("两次输入的密码不一致！")
 
         if not error:
             u = User.new(username, password)
