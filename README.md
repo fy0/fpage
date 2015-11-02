@@ -206,6 +206,8 @@ python fpage.py startapp
 
 * 用户注册增加了“再次输入密码”的校验
 
+* 登录和注册增加了参数 next，用来指定操作完成后跳转的url
+
 ### ver 1.1 update 2015.9.20
 
 * 加入了用户模块

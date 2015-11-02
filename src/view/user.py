@@ -13,6 +13,7 @@ class SignIn(NoLoginView):
         username = self.get_argument("username")
         password = self.get_argument("password")
         remember = self.get_argument('remember', False)
+        next = self.get_argument('next', None)
 
         error = False
         u = User.auth(username, password)
@@ -24,6 +25,8 @@ class SignIn(NoLoginView):
             self.messages.success("登陆成功！")
             expires = 30 if remember else None
             self.set_secure_cookie("u", u.key, expires_days=expires)
+            if next:
+                return self.redirect(next)
             return self.redirect(url_for("index"))
 
         self.render('user/signin.html')
@@ -46,6 +49,7 @@ class SignUp(NoLoginView):
         username = self.get_argument("username")
         password = self.get_argument("password")
         password_again = self.get_argument("password_again")
+        next = self.get_argument('next', None)
 
         error = False
         if len(username) < 3:
@@ -64,6 +68,7 @@ class SignUp(NoLoginView):
         if not error:
             u = User.new(username, password)
             self.messages.success("账户创建成功！")
-            return self.redirect(url_for('signin'))
+            self.redirect(url_for('signin') + (('?next=%s' % next) if next else ''))
+            return
 
         self.render('user/signup.html')

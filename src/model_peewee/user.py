@@ -24,7 +24,7 @@ class USER_LEVEL:
 
 
 class User(BaseModel):
-    username = TextField(index=True)
+    username = TextField(index=True, unique=True)
     password = TextField()
     salt = TextField()
 
@@ -77,6 +77,13 @@ class User(BaseModel):
             return cls.get(cls.key == key)
         except DoesNotExist:
             return None
+
+    @classmethod
+    def get_by_username(cls, username):
+        try:
+            return cls.get(cls.username == username)
+        except DoesNotExist:
+            return
 
     @classmethod
     def count(cls):

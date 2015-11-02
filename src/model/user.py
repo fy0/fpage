@@ -86,6 +86,11 @@ class User(BaseModel):
         return session.query(cls).filter(cls.key==str(key or b'', 'utf-8')).first()
 
     @classmethod
+    def get_by_username(cls, username):
+        session = DBSession()
+        return session.query(cls).filter(cls.username==username).first()
+
+    @classmethod
     def count(cls):
         session = DBSession()
         return session.query(cls).filter(cls.level>0).count()
