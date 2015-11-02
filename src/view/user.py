@@ -12,6 +12,7 @@ class SignIn(NoLoginView):
     def post(self):
         username = self.get_argument("username")
         password = self.get_argument("password")
+        remember = self.get_argument('remember', False)
 
         error = False
         u = User.auth(username, password)
@@ -21,7 +22,8 @@ class SignIn(NoLoginView):
 
         if not error:
             self.messages.success("登陆成功！")
-            self.set_secure_cookie("u", u.key)
+            expires = 30 if remember else None
+            self.set_secure_cookie("u", u.key, expires_days=expires)
             return self.redirect(url_for("index"))
 
         self.render('user/signin.html')

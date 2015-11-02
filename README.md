@@ -202,6 +202,8 @@ python fpage.py startapp
 
 * peewee 的 BaseModel 加入了几个工具函数：to_dict（转为字典）、get_by_pk（根据主键取项，无则返回None）、exists_by_pk（根据主键判断是否存在）
 
+* 修正了“记住密码”选项无效的问题
+
 
 ### ver 1.1 update 2015.9.20
 
