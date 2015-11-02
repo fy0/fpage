@@ -2,7 +2,11 @@
 
 <html>
 <head>
+    {% if page_title %}
+    <title>{{ page_title }}</title>
+    {% else %}
     <title>{{ config.TITLE }}</title>
+    {% end %}
     <meta charset="utf-8">
     <script src="{{ static('js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ static('css/style.css') }}">
