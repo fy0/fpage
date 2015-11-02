@@ -132,6 +132,7 @@ class View(tornado.web.RequestHandler):
 
         kwargs.update({
             'req': self,
+            'config': config,
             'static': self.static_url,
             'url_for': self.reverse_url,
             'get_messages': self.get_messages,
@@ -180,12 +181,6 @@ class View(tornado.web.RequestHandler):
             return user
 
 
-class AjaxView(View):
-    def check_xsrf_cookie(self):
-        # useless for json request
-        pass
-
-
 class LoginView(View):
     def prepare(self):
         if not self.current_user():
@@ -199,7 +194,31 @@ class NoLoginView(View):
             self.redirect(url_for('index'))
 
 
+class AjaxView(View):
+    def check_xsrf_cookie(self):
+        # useless for json request
+        pass
+
+    def prepare(self):
+        self.set_header('Content-Type', 'application/json')
+        super(AjaxView, self).prepare()
+
+
+class AjaxLoginView(LoginView):
+    def check_xsrf_cookie(self):
+        # useless for json request
+        pass
+
+    def prepare(self):
+        self.set_header('Content-Type', 'application/json')
+        super(AjaxLoginView, self).prepare()
+
+
 # sugar
 def url_for(name, *args):
     return config.app.reverse_url(name, *args)
 
+
+def page_title(*args):
+    no_blank = lambda x: x is not None and x != ''
+    return ' » '.join(list(filter(no_blank, args)) + [config.TITLE])

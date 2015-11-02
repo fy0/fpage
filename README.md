@@ -32,19 +32,21 @@ python fpage.py startapp
 
 * 合理的安全性支持 (secure cookie, xsrf)
 
-* 支持 flask 风格的 url 装饰器 @route
+* 支持 flask 风格的 url 路由装饰器 @route
 
 * 简单 session 支持（基于 secure cookie）  
 
 * 可选择模板引擎 mako 或 jinjia2 或 tornado 默认，已做好配置  
 
-* 模板预定义模板变量：req static url_for csrf_token/xsrf_token  
+* 模板预定义模板变量：req static url_for csrf_token/xsrf_token config  
 
 * 集成 sqlalchemy/peewee 支持（二选一）  
 
 * 集成消息闪现功能（类似 django 中 messages 或 flask 中 flash）  
 
 * 集成简单的用户系统
+
+* 自动生成页面标题
 
 ## 目录结构
 
@@ -175,13 +177,37 @@ python fpage.py startapp
   % endfor
   ```
 
+* 自动生成页面标题
+
+  例如：config.TITLE = 'FPage'
+  
+  渲染模板时写入参数 page_title
+  ```python
+  self.render(page_title=page_title('测试板块', '社区')
+  ```
+  
+  于是此页面网页标题就是：测试板块 » 社区 » FPage
+  
+  
+  
 ## 更新
+
+### ver 1.2 wip
+
+* 现在 config 也作为模板中的一个预定义变量
+
+* 加入新的 View 基类： AjaxLoginView
+
+* 新的辅助函数：page_title，用来自定义标题
+
+* peewee 的 BaseModel 加入了几个工具函数：to_dict（转为字典）、get_by_pk（根据主键取项，无则返回None）、exists_by_pk（根据主键判断是否存在）
+
 
 ### ver 1.1 update 2015.9.20
 
 * 加入了用户模块
 
-* 加入了与用户相关的两个基类：LoginView（登陆后可访问） 和 NoLoginView（非登陆可访问）
+* 加入了与用户相关的两个View基类：LoginView（登陆后可访问） 和 NoLoginView（非登陆可访问）
 
 * 加入了一个不检查 xsrf 的基类 AjaxView
 
