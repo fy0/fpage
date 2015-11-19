@@ -2,7 +2,7 @@
 
 FPage 是一个tornado项目生成器。
 
-能够自动创建基于 tornado + mako/jinja2 + sqlalchemy/peewee 的项目。
+能够自动创建基于 tornado + mako/jinja2 + peewee/sqlalchemy 的项目。
 
 
 ## 使用
