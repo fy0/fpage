@@ -46,6 +46,14 @@ class User(BaseModel):
         self.key_time = int(time.time())
         self.save()
 
+    def set_password(self, new_password):
+        salt = random_str()
+        password_md5 = md5(new_password.encode('utf-8')).hexdigest()
+        password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
+        self.salt = salt
+        self.password = password_final
+        self.save()
+
     @classmethod
     def new(cls, username, password):
         salt = random_str()
@@ -66,14 +74,6 @@ class User(BaseModel):
         password_final = md5((password_md5 + u.salt).encode('utf-8')).hexdigest()
         if u.password == password_final:
             return u
-
-    def set_password(self, new_password):
-        salt = random_str()
-        password_md5 = md5(new_password.encode('utf-8')).hexdigest()
-        password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
-        self.salt = salt
-        self.password = password_final
-        self.save()
 
     @classmethod
     def password_change(cls, username, password, new_password):

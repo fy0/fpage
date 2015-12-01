@@ -47,6 +47,17 @@ class User(BaseModel):
         session.add(self)
         session.commit()
 
+    def set_password(self, new_password):
+        salt = random_str()
+        password_md5 = md5(new_password.encode('utf-8')).hexdigest()
+        password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
+        
+        session = DBSession()
+        self.salt = salt
+        self.password = password_final
+        session.add(self)
+        session.commit()
+
     @classmethod
     def new(cls, username, password):
         salt = random_str()
@@ -60,8 +71,15 @@ class User(BaseModel):
                           key_time = the_time, reg_time = the_time)
         session.add(ret)
         session.commit()
-        session.close()
         return ret
+
+    @classmethod
+    def password_change(cls, username, password, new_password):
+        u = cls.auth(username, password)
+        if u:
+            u.set_password(new_password)
+            u.refresh_key()
+            return u
 
     @classmethod
     def auth(cls, username, password):
