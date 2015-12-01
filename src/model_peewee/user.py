@@ -67,6 +67,22 @@ class User(BaseModel):
         if u.password == password_final:
             return u
 
+    def set_password(self, new_password):
+        salt = random_str()
+        password_md5 = md5(new_password.encode('utf-8')).hexdigest()
+        password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
+        self.salt = salt
+        self.password = password_final
+        self.save()
+
+    @classmethod
+    def password_change(cls, username, password, new_password):
+        u = cls.auth(username, password)
+        if u:
+            u.set_password(new_password)
+            u.refresh_key()
+            return u
+
     @classmethod
     def exist(cls, username):
         return cls.select().where(cls.username==username).exists()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+import lib.patch
 import tornado.web
 import tornado.ioloop
 from os import path
