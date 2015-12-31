@@ -223,3 +223,11 @@ python fpage.py startapp
 ## TODO-LIST
 
 * 保持更新
+
+* 文件上传
+
+* SQLAlchemy 分页函数
+
+* 自动测试
+
+* setup.py

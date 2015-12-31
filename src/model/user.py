@@ -1,11 +1,13 @@
 ﻿# coding:utf-8
 
+import sys
 import time
 from hashlib import md5
 from random import Random
 from model import BaseModel, DBSession
 from sqlalchemy import Column, Integer, BigInteger, String, Float, ForeignKey, Boolean
 
+py_ver = sys.version_info.major
 
 def random_str(random_length=16):
     str = ''
@@ -101,7 +103,11 @@ class User(BaseModel):
     @classmethod
     def get_by_key(cls, key):
         session = DBSession()
-        return session.query(cls).filter(cls.key==str(key or b'', 'utf-8')).first()
+        if py_ver == 2:
+            the_key = (key or b'').encode('utf-8')
+        else:
+            the_key = str(key or b'', 'utf-8')
+        return session.query(cls).filter(cls.key==the_key).first()
 
     @classmethod
     def get_by_username(cls, username):
