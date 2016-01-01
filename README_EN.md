@@ -64,7 +64,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 
 ## Feature example
 
-* URL Route decorator like flask (@route)  
+* **URL Route decorator like flask (@route)**  
   ```python
   from view import route, url_for, View
   
@@ -83,7 +83,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 
   ```
 
-* Simple session support（based on secure cookie）  
+* **Simple session support（based on secure cookie）**  
   ```python
   @route('/')
   class Index(View):
@@ -93,8 +93,8 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
           self.session['test'] = 'session test 2'
           self.render(s=self.session['test'])
   ```
-  
-* Choose your favourite template engine (mako/jinjia2/tornado)  
+
+* **Choose your favourite template engine (mako/jinjia2/tornado)**  
   ```mako
   <body>
       ${self.body()}
@@ -108,7 +108,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
   </body>
   ```
 
-* Defined template variable: req static url_for csrf_token/xsrf_token config  
+* **Defined template variable: req static url_for csrf_token/xsrf_token config**  
   req -> request object
   ```mako
     ${ req.current_user }
@@ -130,7 +130,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
     </form>
   ```
 
-* Choose your favourite ORM sqlalchemy/peewee  
+* **Choose your favourite ORM sqlalchemy/peewee**  
   config
   ```python
   DATABASE_URI = "sqlite:///database.db"
@@ -156,7 +156,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
       test = TextField()
   ```
 
-* Message flashing (like of messages django, and flash of flask）  
+* **Message flashing (like of messages django, and flash of flask）**  
   view
   ```python
   @route('/jump_test', name='jump')
@@ -180,7 +180,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
   % endfor
   ```
 
-* Page title helper tool  
+* **Page title helper tool**  
 
   config
   ```python

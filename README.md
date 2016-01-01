@@ -62,7 +62,7 @@ python fpage.py startapp
 
 ## 特性说明
 
-* 支持 flask 风格的 url 装饰器 @route
+* **支持 flask 风格的 url 装饰器 @route**
   ```python
   from view import route, url_for, View
   
@@ -81,7 +81,7 @@ python fpage.py startapp
 
   ```
 
-* 简单 session 支持（基于 secure cookie）  
+* **简单 session 支持（基于 secure cookie）**  
   ```python
   @route('/')
   class Index(View):
@@ -92,7 +92,7 @@ python fpage.py startapp
           self.render(s=self.session['test'])
   ```
   
-* 可选择模板引擎 mako 或 jinjia2 或 tornado 默认，已做好配置  
+* **可选择模板引擎 mako 或 jinjia2 或 tornado 默认，已做好配置**  
   ```mako
   <body>
       ${self.body()}
@@ -106,7 +106,7 @@ python fpage.py startapp
   </body>
   ```
 
-* 模板预定义模板变量：req static url_for csrf_token/xsrf_token  
+* **模板预定义模板变量：req static url_for csrf_token/xsrf_token**  
   req -> request object
   ```mako
     ${ req.current_user }
@@ -128,7 +128,7 @@ python fpage.py startapp
     </form>
   ```
 
-* 集成 sqlalchemy/peewee 支持（二选一）  
+* **集成 sqlalchemy/peewee 支持（二选一）**  
   config
   ```python
   DATABASE_URI = "sqlite:///database.db"
@@ -154,7 +154,7 @@ python fpage.py startapp
       test = TextField()
   ```
 
-* 集成消息闪现功能（类似 django 中 messages 或 flask 中 flash）  
+* **集成消息闪现功能（类似 django 中 messages 或 flask 中 flash）**  
   view
   ```python
   @route('/jump_test', name='jump')
@@ -178,7 +178,7 @@ python fpage.py startapp
   % endfor
   ```
 
-* 自动生成页面标题
+* **自动生成页面标题**  
 
   例如：config.TITLE = 'FPage'
   
