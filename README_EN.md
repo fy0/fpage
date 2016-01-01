@@ -51,7 +51,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 * page title helper tool  
 
 
-## directories
+## Directories
 
 * model
 
@@ -62,7 +62,7 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 * lib - tools
 
 
-## Feature Example
+## Feature example
 
 * URL Route decorator like flask (@route)  
   ```python
