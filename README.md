@@ -4,6 +4,7 @@ FPage 是一个tornado项目生成器。
 
 能够自动创建基于 tornado + mako/jinja2 + peewee/sqlalchemy 的项目。
 
+[English](README_EN.md)
 
 ## 使用
 
@@ -28,7 +29,7 @@ python fpage.py startapp
 
 * MVT 架构(Model, View, Template)
 
-* 兼容 python 2 & python 3
+* 兼容 python 3 & python 2
 
 * 合理的安全性支持 (secure cookie, xsrf)
 
