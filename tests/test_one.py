@@ -13,10 +13,21 @@ import subprocess
 import fpage
 
 
+class DummySubTest(object):
+    def __enter__(self):
+        pass
+        
+    def __exit__(self, type, value, trace):
+        return False
+
+
 class Tests(unittest.TestCase):
     process = []
     dir_lst = []
     dir_to_port = {}
+    
+    def _fake_subTest(self, i):
+        return DummySubTest()
 
     @classmethod
     def setUpClass(cls):
@@ -41,6 +52,9 @@ class Tests(unittest.TestCase):
             os.chdir(cur_dir)
             i += 1
             time.sleep(0.5)
+
+        if 'subTest' not in dir(cls):
+            cls.subTest = cls._fake_subTest
             
         time.sleep(2)
 
