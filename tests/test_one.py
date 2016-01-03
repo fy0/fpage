@@ -33,6 +33,7 @@ class ReTests(unittest.TestCase):
         i = 1
         for name in cls.dir_lst:
             os.chdir(name)
+            print(name, os.getcwd())
             port = '90%02d' % i
             cls.process.append(subprocess.Popen('python ./app.py' + ' -port=' + port))
             cls.dir_to_port[name] = port
@@ -46,15 +47,14 @@ class ReTests(unittest.TestCase):
     def tearDownClass(cls):
         for i in cls.process:
             i.kill()
-            
-        time.sleep(3)
-        
-        return
+
+        '''time.sleep(3)
+
         try:
             for name in cls.dir_lst:
                 shutil.rmtree(name)
         except:
-            pass
+            pass'''
 
     def test_index(self):
         for i in self.dir_lst:
