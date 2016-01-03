@@ -13,7 +13,7 @@ import subprocess
 import fpage
 
 
-class ReTests(unittest.TestCase):
+class Tests(unittest.TestCase):
     process = []
     dir_lst = []
     dir_to_port = {}
@@ -33,9 +33,11 @@ class ReTests(unittest.TestCase):
         i = 1
         for name in cls.dir_lst:
             os.chdir(name)
-            print(name, os.getcwd(), os.listdir())
+            print(name, os.getcwd(), os.listdir('.'))
+            appfile = os.path.join(os.getcwd, 'app.py')
+            print(appfile)
             port = '90%02d' % i
-            cls.process.append(subprocess.Popen('python ./app.py' + ' -port=' + port))
+            cls.process.append(subprocess.Popen('python ' + appfile + ' -port=' + port))
             cls.dir_to_port[name] = port
             os.chdir(cur_dir)
             i += 1
