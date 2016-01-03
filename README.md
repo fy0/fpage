@@ -1,5 +1,8 @@
 # fpage
 
+[![Travis](https://travis-ci.org/fy0/fpage.svg?branch=master)](https://travis-ci.org/fy0/fpage)
+[![Code Climate](https://codeclimate.com/github/fy0/fpage/badges/gpa.svg)](https://codeclimate.com/github/fy0/fpage)
+
 FPage 是一个tornado项目生成器。
 
 能够自动创建基于 tornado + mako/jinja2 + peewee/sqlalchemy 的项目。
