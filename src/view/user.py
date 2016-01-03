@@ -52,9 +52,9 @@ class SignUp(NoLoginView):
         next = self.get_argument('next', None)
 
         error = False
-        if len(username) < 3:
+        if not (3 <= len(username) <= 15):
             error = True
-            self.messages.error("用户名长度必须大于等于3")
+            self.messages.error("用户名长度必须在 3-15 之间")
         if len(password) < 3:
             error = True
             self.messages.error("密码长度必须大于等于3")
