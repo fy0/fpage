@@ -33,8 +33,7 @@ class Tests(unittest.TestCase):
         i = 1
         for name in cls.dir_lst:
             os.chdir(name)
-            print(name, os.getcwd(), os.listdir('.'))
-            appfile = os.path.join(os.getcwd, 'app.py')
+            appfile = os.path.join(os.getcwd(), 'app.py')
             print(appfile)
             port = '90%02d' % i
             cls.process.append(subprocess.Popen('python ' + appfile + ' -port=' + port))
