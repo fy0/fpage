@@ -21,6 +21,42 @@ def help():
     print('  startapp')
     print('  help')
     print('')
+    
+def gen(project_dir, project_name, tmpl_engine, db_orm):
+    shutil.copytree(join(src_dir, 'src'), project_dir)
+
+    if tmpl_engine == 'mako':
+        shutil.rmtree(join(project_dir, 'templates_jinja2'))
+        shutil.rmtree(join(project_dir, 'templates_tornado'))
+    elif tmpl_engine == 'jinja2':
+        shutil.rmtree(join(project_dir, 'templates'))
+        shutil.rmtree(join(project_dir, 'templates_tornado'))
+        shutil.move(join(project_dir, 'templates_jinja2'), join(project_dir, 'templates'))
+    elif tmpl_engine == 'tornado':
+        shutil.rmtree(join(project_dir, 'templates'))
+        shutil.rmtree(join(project_dir, 'templates_jinja2'))
+        shutil.move(join(project_dir, 'templates_tornado'), join(project_dir, 'templates'))
+
+    if db_orm == 'sqlalchemy':
+        shutil.rmtree(join(project_dir, 'model_peewee'))
+    elif db_orm == 'peewee':
+        shutil.rmtree(join(project_dir, 'model'))
+        shutil.move(join(project_dir, 'model_peewee'), join(project_dir, 'model'))
+    
+    config_file = join(project_dir, 'config.py')
+    fp = open(config_file)
+    txt = fp.read()
+    fp.close()
+    txt = txt.replace("TITLE = 'FPage'", "TITLE = '%s'" % project_name)
+    txt = txt.replace("TEMPLATE = 'mako'", "TEMPLATE = '%s'" % tmpl_engine)
+    try:
+        fp = open(config_file, 'w+', encoding='utf-8')
+    except:
+        fp = open(config_file, 'w+')
+    fp.write(txt)
+    fp.close()
+    return True
+
 
 def startapp():
     global input  # fix4py3
@@ -67,34 +103,10 @@ def startapp():
         print('Already Exists!')
         return
 
-    shutil.copytree(join(src_dir, 'src'), project_dir)
-
-    if tmpl_engine == 'mako':
-        shutil.rmtree(join(project_dir, 'templates_jinja2'))
-        shutil.rmtree(join(project_dir, 'templates_tornado'))
-    elif tmpl_engine == 'jinja2':
-        shutil.rmtree(join(project_dir, 'templates'))
-        shutil.rmtree(join(project_dir, 'templates_tornado'))
-        shutil.move(join(project_dir, 'templates_jinja2'), join(project_dir, 'templates'))
-    elif tmpl_engine == 'tornado':
-        shutil.rmtree(join(project_dir, 'templates'))
-        shutil.rmtree(join(project_dir, 'templates_jinja2'))
-        shutil.move(join(project_dir, 'templates_tornado'), join(project_dir, 'templates'))
-
-    if db_orm == 'sqlalchemy':
-        shutil.rmtree(join(project_dir, 'model_peewee'))
-    elif db_orm == 'peewee':
-        shutil.rmtree(join(project_dir, 'model'))
-        shutil.move(join(project_dir, 'model_peewee'), join(project_dir, 'model'))
-    
-    config_file = join(project_dir, 'config.py')
-    txt = open(config_file).read()
-    txt = txt.replace("TITLE = 'FPage'", "TITLE = '%s'" % project_name)
-    txt = txt.replace("TEMPLATE = 'mako'", "TEMPLATE = '%s'" % tmpl_engine)
-    open(config_file, 'w+').write(txt)
+    gen(project_dir, project_name, tmpl_engine, db_orm)
     print('Done.')
 
-    
+
 if __name__ == "__main__":
     if len(argv) > 1:
         if argv[1] == 'help':

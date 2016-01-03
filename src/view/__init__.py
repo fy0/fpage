@@ -146,7 +146,9 @@ class View(tornado.web.RequestHandler):
         else:
             if fn.startswith('/'):
                 fn = '.' + fn
-            super(View, self).render(fn, config=config, **kwargs)
+            if 'page_title' not in kwargs:
+                kwargs['page_title'] = None
+            super(View, self).render(fn, **kwargs)
 
     def get_messages(self):
         msg_lst = self.messages.messages + (self.session['_messages'] or [])
