@@ -34,9 +34,9 @@ class Tests(unittest.TestCase):
         for name in cls.dir_lst:
             os.chdir(name)
             appfile = os.path.join(os.getcwd(), 'app.py')
-            print(appfile)
             port = '90%02d' % i
-            cls.process.append(subprocess.Popen('python ' + appfile + ' -port=' + port))
+            #cls.process.append(subprocess.Popen('python ' + appfile + ' -port=' + port))
+            cls.process.append(os.popen('python ' + appfile + ' -port=' + port))
             cls.dir_to_port[name] = port
             os.chdir(cur_dir)
             i += 1
@@ -46,8 +46,8 @@ class Tests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        for i in cls.process:
-            i.kill()
+        '''for i in cls.process:
+            i.kill()'''
 
         '''time.sleep(3)
 
