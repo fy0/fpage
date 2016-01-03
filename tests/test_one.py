@@ -33,7 +33,7 @@ class ReTests(unittest.TestCase):
         i = 1
         for name in cls.dir_lst:
             os.chdir(name)
-            print(name, os.getcwd())
+            print(name, os.getcwd(), os.listdir())
             port = '90%02d' % i
             cls.process.append(subprocess.Popen('python ./app.py' + ' -port=' + port))
             cls.dir_to_port[name] = port
