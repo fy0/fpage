@@ -107,7 +107,7 @@ class Tests(unittest.TestCase):
                 url = 'http://127.0.0.1:%s/signup' % self.dir_to_port[i]
                 resp = requests.get(url)
                 self.assertEqual(resp.status_code, 200)
-                
+
                 session = requests.Session()
 
                 # length of username must not be less than 3
@@ -127,13 +127,13 @@ class Tests(unittest.TestCase):
                 xsrf = re.search(r'"_xsrf" value="([a-z0-9|]+)"', resp.text).group(1)
                 resp = session.post(url, {'username': 'abc', 'password': '1234', 'password_again': '12345', '_xsrf': xsrf})
                 self.assertTrue(u'两次输入的密码不一致！' in resp.text)
-                
+
                 # success
                 resp = session.get(url)
                 xsrf = re.search(r'"_xsrf" value="([a-z0-9|]+)"', resp.text).group(1)
                 resp = session.post(url, {'username': 'abc', 'password': '1234', 'password_again': '1234', '_xsrf': xsrf})
                 self.assertTrue(u'账户创建成功！' in resp.text)
-                
+
                 # user exists
                 resp = session.get(url)
                 xsrf = re.search(r'"_xsrf" value="([a-z0-9|]+)"', resp.text).group(1)
