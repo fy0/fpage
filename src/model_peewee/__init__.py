@@ -1,5 +1,6 @@
 # coding:utf-8
 
+import math
 import config
 import peewee
 from playhouse.db_url import connect
@@ -42,7 +43,7 @@ def pagination(count_all, query, page_size, cur_page=1, nearby=2):
     else:
         cur_page = 1
 
-    page_count = math.ceil(count_all / page_size)
+    page_count = int(math.ceil(count_all / page_size))
     items_length = nearby * 2 + 1
 
     # if first page in page items, first_page is None,

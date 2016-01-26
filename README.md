@@ -212,6 +212,8 @@ python fpage.py startapp
 
 * 登录和注册增加了参数 next，用来指定操作完成后跳转的url
 
+* 加入了自动测试
+
 ### ver 1.1 update 2015.9.20
 
 * 加入了用户模块
@@ -231,7 +233,5 @@ python fpage.py startapp
 * 文件上传
 
 * SQLAlchemy 分页函数
-
-* 自动测试
 
 * setup.py
