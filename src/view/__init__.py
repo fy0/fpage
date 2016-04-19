@@ -1,5 +1,6 @@
 # coding:utf-8
 
+import sys
 import json
 import random
 import string
@@ -7,6 +8,8 @@ import tornado.web
 import config
 from lib.jsdict import JsDict
 from model.user import User
+
+py_ver = sys.version_info.major
 
 
 # route
@@ -101,6 +104,7 @@ class Messages(object):
     }
 
     def __init__(self):
+        self.has_error = False
         self.messages = []
 
     def _add_message(self, level, message):
@@ -119,6 +123,8 @@ class Messages(object):
         self._add_message(self.MESSAGE_LEVEL.WARNING, message)
 
     def error(self, message):
+        if not self.has_error:
+            self.has_error = True
         self._add_message(self.MESSAGE_LEVEL.ERROR, message)
 
 
@@ -182,6 +188,10 @@ class View(tornado.web.RequestHandler):
         if user and user.is_admin():
             return user
 
+    def data_received(self, chunk):
+        """ just for pycharm warning fix """
+        pass
+
 
 class LoginView(View):
     def prepare(self):
@@ -223,4 +233,8 @@ def url_for(name, *args):
 
 def page_title(*args):
     no_blank = lambda x: x is not None and x != ''
-    return ' » '.join(list(filter(no_blank, args)) + [config.TITLE])
+    lst = list(filter(no_blank, args)) + [config.TITLE]
+    if py_ver == 2:
+        unicode_filter = lambda x: x if type(x) == unicode else x.decode('utf-8')
+        lst = map(unicode_filter, lst)
+    return u' » '.join(lst)

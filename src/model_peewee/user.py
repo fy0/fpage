@@ -37,10 +37,9 @@ class User(BaseModel):
     class Meta:
         db_table = 'users'
 
-
     def is_admin(self):
         return self.level == USER_LEVEL.ADMIN
-        
+
     def refresh_key(self):
         self.key = random_str(32)
         self.key_time = int(time.time())
