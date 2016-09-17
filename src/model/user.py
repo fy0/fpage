@@ -6,6 +6,7 @@ from hashlib import md5
 from random import Random
 from model import BaseModel, DBSession
 from sqlalchemy import Column, Integer, BigInteger, String, Float, ForeignKey, Boolean
+from lib.state_obj import StateObject
 
 py_ver = sys.version_info.major
 
@@ -19,10 +20,15 @@ def random_str(random_length=16):
     return str
 
 
-class USER_LEVEL:
-    BAN = 0
-    NORMAL = 10
+class USER_LEVEL(StateObject):
+    DEL = 0
+    BAN = 30
+    NORMAL = 50
     ADMIN = 100
+
+    txt = {DEL: '删除', BAN: '封禁', NORMAL: '正常', ADMIN: '管理'}
+
+USER_LEVEL.init()
 
 
 class User(BaseModel):

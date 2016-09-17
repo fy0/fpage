@@ -4,6 +4,7 @@ import math
 import config
 import peewee
 from playhouse.db_url import connect
+from playhouse.shortcuts import model_to_dict
 
 db = connect(config.DATABASE_URI)
 
