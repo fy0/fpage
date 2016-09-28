@@ -61,6 +61,7 @@ class User(BaseModel):
 
     @classmethod
     def new(cls, username, password):
+        username = username.lower()
         salt = random_str()
         password_md5 = md5(password.encode('utf-8')).hexdigest()
         password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
@@ -71,6 +72,7 @@ class User(BaseModel):
 
     @classmethod
     def auth(cls, username, password):
+        username = username.lower()
         try:
             u = cls.get(cls.username==username)
         except DoesNotExist:
@@ -82,6 +84,7 @@ class User(BaseModel):
 
     @classmethod
     def password_change(cls, username, password, new_password):
+        username = username.lower()
         u = cls.auth(username, password)
         if u:
             u.set_password(new_password)
@@ -90,6 +93,7 @@ class User(BaseModel):
 
     @classmethod
     def exist(cls, username):
+        username = username.lower()
         return cls.select().where(cls.username==username).exists()
 
     @classmethod
@@ -101,6 +105,7 @@ class User(BaseModel):
 
     @classmethod
     def get_by_username(cls, username):
+        username = username.lower()
         try:
             return cls.get(cls.username == username)
         except DoesNotExist:

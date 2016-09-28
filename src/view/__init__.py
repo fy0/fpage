@@ -215,14 +215,14 @@ class AjaxView(View):
         self.set_header('Content-Type', 'application/json')
         super(AjaxView, self).prepare()
 
+    def options(self, *args, **kwargs):
+        self.finish()
 
-class AjaxLoginView(LoginView):
-    def check_xsrf_cookie(self):
-        # useless for json request
-        pass
 
+class AjaxLoginView(AjaxView):
     def prepare(self):
-        self.set_header('Content-Type', 'application/json')
+        if not self.current_user():
+            return self.finish({'code': -255})
         super(AjaxLoginView, self).prepare()
 
 
