@@ -9,9 +9,19 @@ Quick start a project with tornado + mako/jinja2 + peewee/sqlalchemy。
 
 ## Use
 
-```bash
-python fpage.py new
 ```
+pip install fpage
+
+fpage new [project-name]
+```
+
+or
+
+```bash
+python fpage.py new [project-name]
+```
+
+Step by step:
 
 1. Type your project name.
 
@@ -23,7 +33,32 @@ python fpage.py new
 
 Now here is a directory, it's protype of your project.
 
-python app.py to run, and access http://127.0.0.1:9000 to check.
+Run `python app.py`, and access http://127.0.0.1:9000 to check.  
+
+
+Example:
+
+```bash
+# fpage new test_project
+
+Project Name (test_project):
+Template Engine [M/J/T]:
+Database ORM [P/S]:
+
+   Project Name: test_project
+Template Engine: mako
+   Database ORM: peewee
+
+Sure (Y/n)?
+Complete.
+
+To get started:
+
+    cd test_project
+    python app.py
+
+Served at http://localhost:9000
+```
 
 
 ## Features
@@ -50,7 +85,11 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 
 * simple user system  
 
-* page title helper tool  
+* page title help tool  
+
+* a filter extension for peewee's model_to_dict  
+
+* paginator  
 
 
 ## Directories
@@ -182,7 +221,11 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
   % endfor
   ```
 
-* **Page title helper tool**  
+* a filter extension for peewee
+
+    see `lib/pvpatch.py`
+
+* **Page title help tool**  
 
   config
   ```python
@@ -197,6 +240,38 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
   The title of page: Test Board » Forum » FPage
 
 
+* **paginator**
+
+    model.pagination_peewee / model.pagination_sqlalchemy
+
+    Definition:
+    ```python
+    def pagination(count_all, query, page_size, cur_page=1, nearby=2):
+        pass
+    ```
+
+    Return:
+    ```python
+    {
+        'cur_page': cur_page,
+        'prev_page': prev_page,
+        'next_page': next_page,
+
+        'first_page': first_page,
+        'last_page': last_page,
+
+        'page_numbers': list(items),
+        'page_count': page_count,
+
+        'items': [...],
+        'info': {
+            'page_size': page_size,
+            'count_all': count_all,
+        }
+    }
+    ```
+
+
 ## TODO-LIST
 
-* setup.py
+* nothing

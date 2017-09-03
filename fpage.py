@@ -10,7 +10,8 @@ from sys import argv
 from os.path import join
 py_major_ver = sys.version_info[0]
 
-src_dir = os.path.abspath(sys.path[0])
+src_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 def help():
     print('FPage v1.2 - tornado classic project generator(cli)')
@@ -19,7 +20,7 @@ def help():
     print('  fpage <command>')
     print('')
     print('Commands:')
-    print('  new')
+    print('  new [project-name]')
     print('  help')
     print('')
 
@@ -60,11 +61,18 @@ def gen(project_dir, project_name, tmpl_engine, db_orm):
     return True
 
 
-def startapp():
+def startapp(appname=None):
     global input  # fix4py3
     if py_major_ver == 2:
         input = raw_input
-    project_name = input('Project Name:')
+    
+    if appname:
+        project_name = input('Project Name (%s):' % appname)
+        if not project_name:
+            project_name = appname
+    else:
+        project_name = input('Project Name:')
+    
     tmpl_engine = input('Template Engine [M/J/T]:').lower()
     db_orm = input('Database ORM [P/S]:').lower()
 
@@ -106,17 +114,27 @@ def startapp():
         return
 
     gen(project_dir, project_name, tmpl_engine, db_orm)
-    print('Done.')
+    print('Complete.\n')
+    print('To get started:\n')
+    print('    cd %s' % project_name)
+    print('    python app.py\n')
+    print('Served at http://localhost:9000')
 
 
-if __name__ == "__main__":
+def main():
     if len(argv) > 1:
         if argv[1] == 'help':
             help()
         elif argv[1] == 'new':
-            startapp()
+            if len(argv) > 2:
+                startapp(argv[2])
+            else:
+                startapp()
         else:
             help()
     else:
         help()
 
+
+if __name__ == "__main__":
+    main()

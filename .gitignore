@@ -47,3 +47,5 @@ database.db
 *.py~
 .gitignore~
 *.un~
+
+bak/

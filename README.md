@@ -7,18 +7,30 @@ FPage 是一个传统的(即前后端分离之前)tornado项目生成器(CLI)。
 
 能够自动创建基于 tornado + mako/jinja2 + peewee/sqlalchemy 的项目。
 
-创建的项目可用性大致能够达到 flask 水平。
+实例可参考 [StoryNote](https://github.com/fy0/storynote) [MyCTF](https://github.com/fy0/myctf) 等项目。
 
 
 [English](README_EN.md)
 
 ## 使用
 
+通过 pip：
+
 ```bash
-python fpage.py new
+pip install fpage
+
+fpage new [项目名]
 ```
 
-按照向导走，首先输入项目名。
+或者
+
+clone后直接使用：
+
+```bash
+python fpage.py new [项目名]
+```
+
+接下来按照向导走，首先输入项目名。
 
 然后选择一个模板引擎（**M**ako/**J**inja2/**T**ornado）
 
@@ -27,6 +39,31 @@ python fpage.py new
 最后输入 y 确认
 
 生成的目录就是你需要的，你可以试一下 python app.py 来运行他，然后访问 http://127.0.0.1:9000 来查看效果
+
+
+实例：
+```bash
+# fpage new test_project
+
+Project Name (test_project):
+Template Engine [M/J/T]:
+Database ORM [P/S]:
+
+   Project Name: test_project
+Template Engine: mako
+   Database ORM: peewee
+
+Sure (Y/n)?
+Complete.
+
+To get started:
+
+    cd test_project
+    python app.py
+
+Served at http://localhost:9000
+```
+
 
 
 ## 特性
@@ -54,6 +91,11 @@ python fpage.py new
 * 集成简单的用户系统
 
 * 自动生成页面标题
+
+* 可选的 Peewee 序列化扩展组件
+
+* 内置分页工具
+
 
 ## 目录结构
 
@@ -194,12 +236,49 @@ python fpage.py new
   ```
   
   于是此页面网页标题就是：测试板块 » 社区 » FPage
-  
-  
-  
+
+* **内置分页工具**
+
+    model.pagination_peewee / model.pagination_sqlalchemy
+    
+    参数大致如此：
+    ```python
+    def pagination(count_all, query, page_size, cur_page=1, nearby=2):
+        pass
+    ```
+
+    输出大致如此：
+    ```python
+    {
+        'cur_page': cur_page,
+        'prev_page': prev_page,
+        'next_page': next_page,
+
+        'first_page': first_page,
+        'last_page': last_page,
+
+        'page_numbers': list(items),
+        'page_count': page_count,
+
+        'items': [...],
+        'info': {
+            'page_size': page_size,
+            'count_all': count_all,
+        }
+    }
+    ```
+
+
 ## 更新
 
-### ver 1.2 wip
+### ver 1.2 update 2017.09.04
+
+* 加入了分页工具
+
+* 加入 pypi 软件源(早该如此……)
+
+
+### ver 1.2alpha update 2016
 
 * 现在 config 也作为模板中的一个预定义变量
 
@@ -217,6 +296,7 @@ python fpage.py new
 
 * 加入了自动测试
 
+
 ### ver 1.1 update 2015.9.20
 
 * 加入了用户模块
@@ -229,6 +309,7 @@ python fpage.py new
 
 * 一些小的修正
 
+
 ## TODO-LIST
 
-* setup.py
+* 不再增加新功能，一个时代已经落幕

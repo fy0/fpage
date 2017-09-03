@@ -1,0 +1,5 @@
+include LICENSE
+recursive-include src *
+
+global-exclude *.py[co]
+prune fpage.egg-info
