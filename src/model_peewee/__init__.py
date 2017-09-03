@@ -28,15 +28,16 @@ class BaseModel(peewee.Model):
         return cls.select().where(cls._meta.primary_key == value).exists()
 
 
-def pagination(count_all, query, page_size, cur_page=1, nearby=2):
+def pagination_calc(count_all, page_size, cur_page=1, nearby=2):
     """
+    :param nearby:
     :param count_all: count of all items
-    :param query: a peewee query object
     :param page_size: size of one page
     :param cur_page: current page number, accept string digit
     :return: num of pages, an iterator
     """
     if type(cur_page) == str:
+        # noinspection PyUnresolvedReferences
         cur_page = int(cur_page) if cur_page.isdigit() else 1
     elif type(cur_page) == int:
         if cur_page <= 0:
@@ -56,14 +57,14 @@ def pagination(count_all, query, page_size, cur_page=1, nearby=2):
     next_page = cur_page + 1 if cur_page != page_count else None
 
     if page_count <= items_length:
-        items = range(1, page_count+1)
+        items = range(1, page_count + 1)
     elif cur_page <= nearby:
         # start of items
-        items = range(1, items_length+1)
+        items = range(1, items_length + 1)
         last_page = True
     elif cur_page >= page_count - nearby:
         # end of items
-        items = range(page_count - items_length+1, page_count+1)
+        items = range(page_count - items_length + 1, page_count + 1)
         first_page = True
     else:
         items = range(cur_page - nearby, cur_page + nearby + 1)
@@ -82,8 +83,18 @@ def pagination(count_all, query, page_size, cur_page=1, nearby=2):
         'first_page': first_page,
         'last_page': last_page,
 
-        'page_numbers': items,
+        'page_numbers': list(items),
         'page_count': page_count,
 
-        'items': query.paginate(cur_page, page_size),
+        'info': {
+            'page_size': page_size,
+            'count_all': count_all,
+        }
     }
+
+
+def pagination_peewee(count_all, query, page_size, cur_page=1, nearby=2):
+    pg = pagination_calc(count_all, page_size, cur_page, nearby)
+    pg['items'] = query.paginate(pg['cur_page'], page_size)
+    pg['page_numbers'] = list(pg['page_numbers'])
+    return pg

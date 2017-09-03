@@ -226,7 +226,6 @@ class AjaxLoginView(AjaxView):
         super(AjaxLoginView, self).prepare()
 
 
-# sugar
 def url_for(name, *args):
     return config.app.reverse_url(name, *args)
 

@@ -13,15 +13,17 @@ py_major_ver = sys.version_info[0]
 src_dir = os.path.abspath(sys.path[0])
 
 def help():
-    print('FPage - tornado project generator')
+    print('FPage v1.2 - tornado classic project generator(cli)')
+    print('repo: github.com/fy0/fpage\n')
     print('Usage:')
     print('  fpage <command>')
     print('')
     print('Commands:')
-    print('  startapp')
+    print('  new')
     print('  help')
     print('')
-    
+
+
 def gen(project_dir, project_name, tmpl_engine, db_orm):
     shutil.copytree(join(src_dir, 'src'), project_dir)
 
@@ -111,7 +113,7 @@ if __name__ == "__main__":
     if len(argv) > 1:
         if argv[1] == 'help':
             help()
-        elif argv[1] == 'startapp':
+        elif argv[1] == 'new':
             startapp()
         else:
             help()

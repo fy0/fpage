@@ -3,16 +3,19 @@
 [![Travis](https://travis-ci.org/fy0/fpage.svg?branch=master)](https://travis-ci.org/fy0/fpage)
 [![Code Climate](https://codeclimate.com/github/fy0/fpage/badges/gpa.svg)](https://codeclimate.com/github/fy0/fpage)
 
-FPage 是一个tornado项目生成器。
+FPage 是一个传统的(即前后端分离之前)tornado项目生成器(CLI)。
 
 能够自动创建基于 tornado + mako/jinja2 + peewee/sqlalchemy 的项目。
+
+创建的项目可用性大致能够达到 flask 水平。
+
 
 [English](README_EN.md)
 
 ## 使用
 
 ```bash
-python fpage.py startapp
+python fpage.py new
 ```
 
 按照向导走，首先输入项目名。
@@ -227,11 +230,5 @@ python fpage.py startapp
 * 一些小的修正
 
 ## TODO-LIST
-
-* 保持更新
-
-* 文件上传
-
-* SQLAlchemy 分页函数
 
 * setup.py

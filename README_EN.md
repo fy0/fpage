@@ -1,6 +1,8 @@
 # fpage
 
-FPage is a tornado project generator.
+FPage is a tornado classic project generator(cli).
+
+`classic` means the style before separation of front-end and backend became popular.
 
 Quick start a project with tornado + mako/jinja2 + peewee/sqlalchemy。
 
@@ -8,7 +10,7 @@ Quick start a project with tornado + mako/jinja2 + peewee/sqlalchemy。
 ## Use
 
 ```bash
-python fpage.py startapp
+python fpage.py new
 ```
 
 1. Type your project name.
@@ -196,11 +198,5 @@ python app.py to run, and access http://127.0.0.1:9000 to check.
 
 
 ## TODO-LIST
-
-* file upload  
-
-* paginator (SQLAlchemy ver)
-
-* auto tests
 
 * setup.py

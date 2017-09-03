@@ -18,7 +18,7 @@ def random_str(random_length=16):
     return str
 
 
-class USER_LEVEL(StateObject):
+class USER_STATE(StateObject):
     DEL = 0
     BAN = 30
     NORMAL = 50
@@ -26,7 +26,7 @@ class USER_LEVEL(StateObject):
 
     txt = {DEL: '删除', BAN: '封禁', NORMAL: '正常', ADMIN: '管理'}
 
-USER_LEVEL.init()
+USER_STATE.init()
 
 
 class User(BaseModel):
@@ -35,7 +35,7 @@ class User(BaseModel):
     salt = TextField()
 
     key = TextField(index=True)
-    level = IntegerField()
+    state = IntegerField()
 
     reg_time = BigIntegerField()
     key_time = BigIntegerField()
@@ -44,7 +44,7 @@ class User(BaseModel):
         db_table = 'users'
 
     def is_admin(self):
-        return self.level == USER_LEVEL.ADMIN
+        return self.state == USER_STATE.ADMIN
 
     def refresh_key(self):
         self.key = random_str(32)
@@ -65,9 +65,9 @@ class User(BaseModel):
         salt = random_str()
         password_md5 = md5(password.encode('utf-8')).hexdigest()
         password_final = md5((password_md5 + salt).encode('utf-8')).hexdigest()
-        level = USER_LEVEL.ADMIN if cls.count() == 0 else USER_LEVEL.NORMAL  # 首个用户赋予admin权限
+        state = USER_STATE.ADMIN if cls.count() == 0 else USER_STATE.NORMAL  # first user is admin
         the_time = int(time.time())
-        return cls.create(username=username, password=password_final, salt=salt, level=level, key=random_str(32),
+        return cls.create(username=username, password=password_final, salt=salt, state=state, key=random_str(32),
                           key_time = the_time, reg_time = the_time)
 
     @classmethod
@@ -113,4 +113,4 @@ class User(BaseModel):
 
     @classmethod
     def count(cls):
-        return cls.select(cls.level>0).count()
+        return cls.select(cls.state>0).count()
