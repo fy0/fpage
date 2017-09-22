@@ -28,6 +28,6 @@ if __name__ == "__main__":
     if len(argv) > 1 and  argv[1][:6] == '-port=':
         config.PORT = int(argv[1][6:])
 
-    application.listen(config.PORT)
-    print('Server started at port %s' % config.PORT)
+    application.listen(config.PORT, address=config.HOST)
+    print('Server started at %s:%s' % (config.HOST, config.PORT))
     tornado.ioloop.IOLoop.instance().start()

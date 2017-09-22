@@ -24,6 +24,13 @@ class BaseModel(peewee.Model):
             return
 
     @classmethod
+    def get_by(cls, *exprs):
+        try:
+            return cls.get(*exprs)
+        except cls.DoesNotExist:
+            return
+
+    @classmethod
     def exists_by_pk(cls, value):
         return cls.select().where(cls._meta.primary_key == value).exists()
 
