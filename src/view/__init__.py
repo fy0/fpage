@@ -179,12 +179,13 @@ class View(tornado.web.RequestHandler):
         self.session.flush()
         super(View, self).flush(include_footers, callback)
 
+    @property
     def current_user(self):
         key = self.get_secure_cookie('u')
         return User.get_by_key(key)
 
     def is_admin(self):
-        user = self.current_user()
+        user = self.current_user
         if user and user.is_admin():
             return user
 
@@ -195,13 +196,13 @@ class View(tornado.web.RequestHandler):
 
 class LoginView(View):
     def prepare(self):
-        if not self.current_user():
+        if not self.current_user:
             self.redirect(url_for('signin'))
 
 
 class NoLoginView(View):
     def prepare(self):
-        if self.current_user():
+        if self.current_user:
             self.messages.error("您已登陆，请先退出")
             self.redirect(url_for('index'))
 
@@ -221,7 +222,7 @@ class AjaxView(View):
 
 class AjaxLoginView(AjaxView):
     def prepare(self):
-        if not self.current_user():
+        if not self.current_user:
             return self.finish({'code': -255})
         super(AjaxLoginView, self).prepare()
 

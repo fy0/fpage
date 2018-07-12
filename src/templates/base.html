@@ -15,7 +15,7 @@
 
 <body>
     <div>
-        % if req.current_user():
+        % if req.current_user:
             <a href="${ url_for('signout') }">注销</a>
         % else:
             <a href="${ url_for('signup') }">注册</a>
